@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock de Productos - Botillería Pato Mar</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .carrito {
+    background-color: #f3f3f3;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+  }
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  .remove-btn {
+    background-color: #f44336;
+  }
+  .remove-btn:hover {
+    background-color: #d32f2f;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Stock de Productos</h2>
+  <ul>
+    <li id="producto1">Vino tinto - Precio: $10 - 
+      <label for="cantidadVino">Cantidad:</label>
+      <select id="cantidadVino" name="cantidadVino">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button onclick="agregarAlCarrito('Vino tinto', 10, 'cantidadVino')">Reservar</button>
+    </li>
+    <li id="producto2">Cerveza - Precio: $5 - 
+      <label for="cantidadCerveza">Cantidad:</label>
+      <select id="cantidadCerveza" name="cantidadCerveza">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button onclick="agregarAlCarrito('Cerveza', 5, 'cantidadCerveza')">Reservar</button>
+    </li>
+    <li id="producto3">Whisky - Precio: $20 - 
+      <label for="cantidadWhisky">Cantidad:</label>
+      <select id="cantidadWhisky" name="cantidadWhisky">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button onclick="agregarAlCarrito('Whisky', 20, 'cantidadWhisky')">Reservar</button>
+    </li>
+    <li id="producto4">Ron - Precio: $15 - 
+      <label for="cantidadRon">Cantidad:</label>
+      <select id="cantidadRon" name="cantidadRon">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button onclick="agregarAlCarrito('Ron', 15, 'cantidadRon')">Reservar</button>
+    </li>
+    <li id="producto5">Ginebra - Precio: $12 - 
+      <label for="cantidadGinebra">Cantidad:</label>
+      <select id="cantidadGinebra" name="cantidadGinebra">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button onclick="agregarAlCarrito('Ginebra', 12, 'cantidadGinebra')">Reservar</button>
+    </li>
+    <li id="producto6">Tequila - Precio: $18 - 
+      <label for="cantidadTequila">Cantidad:</label>
+      <select id="cantidadTequila" name="cantidadTequila">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button onclick="agregarAlCarrito('Tequila', 18, 'cantidadTequila')">Reservar</button>
+    </li>
+    <li id="producto7">Pisco - Precio: $8 - 
+      <label for="cantidadPisco">Cantidad:</label>
+      <select id="cantidadPisco" name="cantidadPisco">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button onclick="agregarAlCarrito('Pisco', 8, 'cantidadPisco')">Reservar</button>
+    </li>
+  </ul>
+  <div class="carrito">
+    <h3>Carrito</h3>
+    <p>Productos seleccionados:</p>
+    <ul id="carrito-list"></ul>
+    <label for="rut">RUT:</label>
+    <input type="text" id="rut" name="rut">
+    <label for="numeroDocumento">Número de Documento:</label>
+    <input type="text" id="numeroDocumento" name="numeroDocumento">
+    <br><br>
+    <button onclick="imprimirTicket()">Imprimir Ticket</button>
+  </div>
+</div>
+
+<script>
+  function agregarAlCarrito(nombre, precio, cantidadId) {
+    var cantidad = document.getElementById(cantidadId).value;
+    var producto = nombre + ' - Precio: $' + precio + ' - Cantidad: ' + cantidad;
+    var listItem = document.createElement('li');
+    listItem.textContent = producto;
+    listItem.innerHTML += ' <button class="remove-btn" onclick="quitarDelCarrito(this)">Quitar</button>';
+    document.getElementById('carrito-list').appendChild(listItem);
+  }
+
+  function quitarDelCarrito(elemento) {
+    elemento.parentNode.remove();
+  }
+
+  function imprimirTicket() {
+    var rut = document.getElementById('rut').value;
+    var numeroDocumento = document.getElementById('numeroDocumento').value;
+    var productosSeleccionados = document.getElementById('carrito-list').innerHTML;
+
+    var ticketInfo = "RUT: " + rut + "\n";
+    ticketInfo += "Número de Documento: " + numeroDocumento + "\n";
+    ticketInfo += "Productos Seleccionados:\n" + productosSeleccionados;
+
+    alert(ticketInfo);
+  }
+</script>
+
+</body>
+</html>
