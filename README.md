@@ -1,2 +1,2 @@
 # Stock_Botiller-a
-Proyecto Stck Botillería Integrantes Ian Romo, Carlos Montupil, Johan Hernández.
+Proyecto Stock Botillería Integrantes Ian Romo, Carlos Montupil, Johan Hernández.
