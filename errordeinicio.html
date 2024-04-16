@@ -53,15 +53,21 @@
         background-color: #45a049;
       }
       .logo-container {
-         display: flex;
-         align-items: center;
-    }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
 
-    .logo {
-      width: 100px; /* Tamaño deseado para la imagen */
-      height: auto;
-      margin-right: 10px; /* Espacio entre la imagen y el texto */
-        }
+      .logo {
+        width: 100px;
+        height: auto;
+        margin-right: 10px;
+      }
+
+      .title-container {
+        text-align: left;
+      }
     </style>
   </head>
   <body>
@@ -80,12 +86,15 @@
       </button>
     </div>
     <div class="container">
-      <img src="imagen/LOGOPATOMAR.png" alt="Logo de Botillería Pato Mar" class="logo">
-      <h1 class="text-success">Bienvenido a Botillería Pato Mar</h1>
-      <h2>Error de Inicio de Sesión</h2>
+      <div class="logo-container">
+        <div class="title-container">
+          <h1 class="text-success">Botillería Pato Mar</h1>
+          <h2>Error de Inicio de Sesión</h2>
+        </div>
+      </div>
       <p>Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.</p>
       <div class="button-container">
-        <a href="index.html" class="button">Volver a pagina principal</a>
+        <a href="index.html" class="button">Volver a página principal</a>
       </div>
     </div>
     <!--Tarjeta complemento bootstrap-->
@@ -113,3 +122,4 @@
     ></script>
   </body>
 </html>
+  
