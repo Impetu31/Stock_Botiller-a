@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pagina de admin</title>
     <link rel="stylesheet" href="css/style.css" />
-
     <!-- CSS Boostrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
     <link
       rel="stylesheet"
@@ -16,75 +18,81 @@
       crossorigin="anonymous"
     />
     <style>
-        body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-          background-color: #f9f9f9;
-        }
-        .container {
-          max-width: 800px;
-          margin: 20px auto;
-          padding: 20px;
-          background-color: #ccccccb0;
-          border-radius: 10px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-          text-align: center;
-          color: #333;
-          margin-bottom: 20px;
-        }
-        .search-bar {
-          text-align: center;
-          margin-top: 20px;
-        }
-        hr {
-          border: 1px solid #ccc;
-          margin: 20px 0;
-        }
-        button {
-          padding: 10px 20px;
-          background-color: #4caf50;
-          color: white;
-          border: none;
-          cursor: pointer;
-          border-radius: 5px;
-          margin-bottom: 10px;
-        }
-        button:hover {
-          background-color: #45a049;
-        }
-        .logo-container {
-         display: flex;
-         align-items: center;
-    }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+      }
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #ccccccb0;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      .search-bar {
+        text-align: center;
+        margin-top: 20px;
+      }
+      hr {
+        border: 1px solid #ccc;
+        margin: 20px 0;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Añadido */
+        margin-bottom: 20px; /* Añadido */
+      }
 
-    .logo {
-      width: 100px; /* Tamaño deseado para la imagen */
-      height: auto;
-      margin-right: 10px; /* Espacio entre la imagen y el texto */
-        }
-      </style>
-</head>
-<body>
+      .logo {
+        width: 100px;
+        height: auto;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
     <div class="alert alert-danger" role="alert">
-        Este inicio de session es solo para administradores!!.
-      </div>      
-      <div class="container">
-        <div class="logo-container">
-          <img src="imagen/LOGOPATOMAR.png" alt="Logo de Botillería Pato Mar" class="logo">
-          <h1 class="text-success">Bienvenido a Botillería Pato Mar</h1>
-        </div> 
+      Este inicio de session es solo para administradores!!.
+    </div>
     <div class="container">
-     <h2>Inicio de session de admin</h2>
-        <form action="/login" method="POST">
-          <label for="username">Admin:</label><br />
-          <input type="text" id="username" name="username" /><br />
-          <label for="password">Contraseña:</label><br />
-          <input type="password" id="password" name="password" /><br /><br />
-          <button type="submit">Iniciar sesión</button>
-        </form>
+      <div class="logo-container"> <!-- Cambiado -->
+        <img
+          src="imagen/LOGOPATOMAR.png"
+          alt="Logo de Botillería Pato Mar"
+          class="logo"
+        />
+        <h1 class="text-success">Bienvenido a Botillería Pato Mar</h1>
+      </div> <!-- Cambiado -->
+
+      <h2>Inicio de session de admin</h2>
+      <form action="/login" method="POST">
+        <label for="username">Admin:</label><br />
+        <input type="text" id="username" name="username" /><br />
+        <label for="password">Contraseña:</label><br />
+        <input type="password" id="password" name="password" /><br /><br />
+        <button type="submit">Iniciar sesión</button>
+      </form>
     </div>
     <!--JS Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -104,5 +112,5 @@
       integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
       crossorigin="anonymous"
     ></script>
-</body>
+  </body>
 </html>
