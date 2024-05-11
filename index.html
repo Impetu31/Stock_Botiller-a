@@ -204,7 +204,7 @@
           password: "required"
         },
         messages: {
-          username: "Por favor, ingresa tu nombre de usuario o correo",
+          username: "Por favor, ingresa tu nom  bre de usuario o correo",
           password: "Por favor, ingresa tu contraseña"
         },
         submitHandler: function (form) {
@@ -216,7 +216,7 @@
           if (user && user.username === username && user.password === password) {
             // Usuario encontrado, redirigir a la página de inicio
             alert("Inicio de sesión exitoso");
-            window.location.href = "inicio.html";
+            window.location.href = "stock.html";
           } else {
             // Usuario no encontrado o credenciales incorrectas
             alert("Nombre de usuario o contraseña incorrectos");
