@@ -74,6 +74,15 @@
       height: auto;
       margin-right: 10px; /* Espacio entre la imagen y el texto */
     }
+    .logout-button {
+      float: right; /* Para alinear el botón a la derecha */
+      margin-top: 10px; /* Para darle un poco de espacio desde arriba */
+      background-color: #4caf50; /* Color verde */
+      border: none;
+    }
+    .logout-button:hover {
+      background-color: #45a049; /* Cambio de color al pasar el mouse */
+    }
   </style>
 </head>
 <body>
@@ -91,7 +100,8 @@
   </div>
   <nav>
     <div class="container">
-      <div id="user-info"></div> <!-- Aquí se mostrará el nombre de usuario -->
+      <div id="user-info" class="user-info"></div> <!-- Aquí se mostrará el nombre de usuario -->
+      <button id="logout-button" class="btn logout-button" style="display: none;">Cerrar sesión</button>
     </div>
   </nav>
   <div class="container">
@@ -227,10 +237,7 @@
         var registeredUsernames = JSON.parse(localStorage.getItem("registeredUsernames")) || [];
         return !registeredUsernames.includes(value);
       }, "Este nombre de usuario ya está registrado. Por favor, elige otro.");
-    });
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
+      
       // Comprobar si hay una sesión activa al cargar la página
       var userInfoElement = document.getElementById("user-info");
       var user = JSON.parse(localStorage.getItem("user")); // Obtener la información del usuario de localStorage
@@ -238,10 +245,19 @@
       if (user) {
         // Si hay un usuario almacenado en la sesión, mostrar su nombre de usuario
         userInfoElement.textContent = "¡Bienvenido, " + user.username + "!";
+        $("#logout-button").show(); // Mostrar el botón de cierre de sesión
       } else {
         // Si no hay un usuario almacenado, mostrar un mensaje de invitación para iniciar sesión
-        userInfoElement.innerHTML = '<a href="login.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
+        userInfoElement.innerHTML = '<a href="index.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
       }
+
+      // Manejar el clic en el botón de cierre de sesión
+      $("#logout-button").click(function() {
+        // Eliminar el usuario de localStorage
+        localStorage.removeItem("user");
+        // Redireccionar a la página de inicio de sesión u otra página si es necesario
+        window.location.href = "index.html";
+      });
     });
   </script>
 </body>
