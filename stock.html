@@ -90,6 +90,7 @@
 <nav>
     <div class="container">
       <div id="user-info"></div> <!-- Aquí se mostrará el nombre de usuario -->
+      <button id="logout-button" class="btn logout-button" style="float: right; margin-top: 10px; background-color: #4caf50; border: none; display: none;">Cerrar sesión</button>
     </div>
   </nav>
 </div>
@@ -256,10 +257,19 @@
       if (user) {
         // Si hay un usuario almacenado en la sesión, mostrar su nombre de usuario
         userInfoElement.textContent = "¡Bienvenido, " + user.username + "!";
+        document.getElementById("logout-button").style.display = "block"; // Mostrar el botón de cierre de sesión
       } else {
         // Si no hay un usuario almacenado, mostrar un mensaje de invitación para iniciar sesión
         userInfoElement.innerHTML = '<a href="login.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
       }
+
+      // Manejar el clic en el botón de cierre de sesión
+      document.getElementById("logout-button").addEventListener("click", function() {
+        // Eliminar el usuario de localStorage
+        localStorage.removeItem("user");
+        // Redireccionar a la página de inicio de sesión u otra página si es necesario
+        window.location.href = "login.html";
+      });
     });
   </script>
 </body>
