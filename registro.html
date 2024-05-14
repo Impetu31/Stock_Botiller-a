@@ -89,6 +89,11 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  <nav>
+    <div class="container">
+      <div id="user-info"></div> <!-- Aquí se mostrará el nombre de usuario -->
+    </div>
+  </nav>
   <div class="container">
     <div class="logo-container">
       <img
@@ -217,12 +222,26 @@
           window.location.href = "registroexitoso.html";
         },
       });
-
       // Método personalizado para verificar si el nombre de usuario es único
       $.validator.addMethod("uniqueUsername", function(value, element) {
         var registeredUsernames = JSON.parse(localStorage.getItem("registeredUsernames")) || [];
         return !registeredUsernames.includes(value);
       }, "Este nombre de usuario ya está registrado. Por favor, elige otro.");
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Comprobar si hay una sesión activa al cargar la página
+      var userInfoElement = document.getElementById("user-info");
+      var user = JSON.parse(localStorage.getItem("user")); // Obtener la información del usuario de localStorage
+
+      if (user) {
+        // Si hay un usuario almacenado en la sesión, mostrar su nombre de usuario
+        userInfoElement.textContent = "¡Bienvenido, " + user.username + "!";
+      } else {
+        // Si no hay un usuario almacenado, mostrar un mensaje de invitación para iniciar sesión
+        userInfoElement.innerHTML = '<a href="login.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
+      }
     });
   </script>
 </body>
