@@ -102,17 +102,28 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    $(document).ready(function () {
       var userInfoElement = document.getElementById("user-info");
-      var logoutButton = document.getElementById("logout-button");
-
-      var user = JSON.parse(localStorage.getItem("user"));
+      var user = JSON.parse(localStorage.getItem("user")); // Obtener la información del usuario de localStorage
 
       if (user) {
+        // Si hay un usuario almacenado en la sesión, mostrar su nombre de usuario
         userInfoElement.textContent = "¡Bienvenido, " + user.username + "!";
-        logoutButton.style.display = "block";
+        $("#logout-button").show(); // Mostrar el botón de cierre de sesión
+      } else {
+        // Si no hay un usuario almacenado, mostrar un mensaje de invitación para iniciar sesión
+        userInfoElement.innerHTML = '<a href="index.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
       }
+
+      // Manejar el clic en el botón de cierre de sesión
+      $("#logout-button").click(function() {
+        // Eliminar el usuario de localStorage
+        localStorage.removeItem("user");
+        // Redireccionar a la página de inicio de sesión u otra página si es necesario
+        window.location.href = "index.html";
+      });
     });
   </script>
 </body>
