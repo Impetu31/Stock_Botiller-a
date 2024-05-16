@@ -173,6 +173,15 @@
       return;
     }
     var carritoList = document.getElementById("carrito-list");
+    // Verificar si el producto ya está en el carrito
+    var productosEnCarrito = carritoList.getElementsByTagName("li");
+    for (var i = 0; i < productosEnCarrito.length; i++) {
+      var nombreProducto = productosEnCarrito[i].textContent.split(' - ')[0];
+      if (nombreProducto === producto.nombre) {
+        alert("Este producto ya está en tu carrito.");
+        return;
+      }
+    }
     var listItem = document.createElement("li");
     listItem.textContent = `${producto.nombre} - Precio: $${producto.precio} - Cantidad: ${cantidad}`;
     var removeButton = document.createElement("button");
