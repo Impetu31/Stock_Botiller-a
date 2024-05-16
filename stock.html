@@ -112,7 +112,7 @@
     <label for="numeroDocumento">Número de Documento:</label>
     <input type="text" id="numeroDocumento" name="numeroDocumento">
     <br><br>
-    <button onclick="imprimirTicket()">Imprimir Ticket</button>
+    <button id="reservar-btn" onclick="imprimirTicket()">Imprimir Ticket</button>
   </div>
 </div>
 
@@ -127,6 +127,7 @@
       document.getElementById("logout-button").style.display = "block";
     } else {
       userInfoElement.innerHTML = '<a href="index.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
+      document.getElementById("reservar-btn").disabled = true;
     }
 
     document.getElementById("logout-button").addEventListener("click", function() {
@@ -146,24 +147,31 @@
     productos.forEach(function(producto, index) {
       var listItem = document.createElement("li");
       listItem.textContent = `${producto.nombre} - Precio: $${producto.precio} - Disponibles: ${producto.cantidad}`;
-      var cantidadInput = document.createElement("input");
-      cantidadInput.type = "number";
-      cantidadInput.id = `cantidad${index}`;
-      cantidadInput.name = `cantidad${index}`;
-      cantidadInput.min = 0;
-      cantidadInput.max = Math.min(producto.cantidad, 5); // Limitar la cantidad máxima al mínimo entre 5 y la cantidad disponible
-      cantidadInput.required = true;
+      var cantidadSelect = document.createElement("select");
+      cantidadSelect.id = `cantidad${index}`;
+      cantidadSelect.name = `cantidad${index}`;
+      for (var i = 1; i <= 5; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.textContent = i;
+        cantidadSelect.appendChild(option);
+      }
       listItem.appendChild(document.createTextNode(" - Cantidad: "));
-      listItem.appendChild(cantidadInput);
+      listItem.appendChild(cantidadSelect);
       var addButton = document.createElement("button");
       addButton.textContent = "Reservar";
-      addButton.onclick = function() { agregarAlCarrito(producto, cantidadInput.value); };
+      addButton.onclick = function() { agregarAlCarrito(producto, cantidadSelect.value); };
       listItem.appendChild(addButton);
       listaProductos.appendChild(listItem);
     });
   }
 
   function agregarAlCarrito(producto, cantidad) {
+    var user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("Debes iniciar sesión para agregar productos al carrito.");
+      return;
+    }
     var carritoList = document.getElementById("carrito-list");
     var listItem = document.createElement("li");
     listItem.textContent = `${producto.nombre} - Precio: $${producto.precio} - Cantidad: ${cantidad}`;
@@ -207,6 +215,11 @@
   }
 
   function imprimirTicket() {
+    var user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("Debes iniciar sesión para imprimir el ticket.");
+      return;
+    }
     var rut = document.getElementById('rut').value;
     var numeroDocumento = document.getElementById('numeroDocumento').value;
     var productosSeleccionados = '';
@@ -224,7 +237,6 @@
     ticketInfo += "Productos Seleccionados:\n" + productosSeleccionados;
     
     alert(ticketInfo);
-    
   }
 </script>
 </body>
