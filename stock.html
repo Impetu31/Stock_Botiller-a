@@ -100,84 +100,8 @@
     Bienvenido a Botillería Pato Mar
   </h1>
   <h2>Stock de Productos</h2>
-  <ul>
-    <li id="producto1">Vino tinto - Precio: $10 - 
-      <label for="cantidadVino">Cantidad:</label>
-      <select id="cantidadVino" name="cantidadVino">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button onclick="agregarAlCarrito('Vino tinto', 10, 'cantidadVino')">Reservar</button>
-    </li>
-    <li id="producto2">Cerveza - Precio: $5 - 
-      <label for="cantidadCerveza">Cantidad:</label>
-      <select id="cantidadCerveza" name="cantidadCerveza">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button onclick="agregarAlCarrito('Cerveza', 5, 'cantidadCerveza')">Reservar</button>
-    </li>
-    <li id="producto3">Whisky - Precio: $20 - 
-      <label for="cantidadWhisky">Cantidad:</label>
-      <select id="cantidadWhisky" name="cantidadWhisky">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button onclick="agregarAlCarrito('Whisky', 20, 'cantidadWhisky')">Reservar</button>
-    </li>
-    <li id="producto4">Ron - Precio: $15 - 
-      <label for="cantidadRon">Cantidad:</label>
-      <select id="cantidadRon" name="cantidadRon">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button onclick="agregarAlCarrito('Ron', 15, 'cantidadRon')">Reservar</button>
-    </li>
-    <li id="producto5">Ginebra - Precio: $12 - 
-      <label for="cantidadGinebra">Cantidad:</label>
-      <select id="cantidadGinebra" name="cantidadGinebra">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button onclick="agregarAlCarrito('Ginebra', 12, 'cantidadGinebra')">Reservar</button>
-    </li>
-    <li id="producto6">Tequila - Precio: $18 - 
-      <label for="cantidadTequila">Cantidad:</label>
-      <select id="cantidadTequila" name="cantidadTequila">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button onclick="agregarAlCarrito('Tequila', 18, 'cantidadTequila')">Reservar</button>
-    </li>
-    <li id="producto7">Pisco - Precio: $8 - 
-      <label for="cantidadPisco">Cantidad:</label>
-      <select id="cantidadPisco" name="cantidadPisco">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button onclick="agregarAlCarrito('Pisco', 8, 'cantidadPisco')">Reservar</button>
-    </li>
+  <ul id="lista-productos">
+    <!-- Los productos se cargarán aquí dinámicamente desde el script -->
   </ul>
   <div class="carrito">
     <h3>Carrito</h3>
@@ -192,18 +116,94 @@
   </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  function agregarAlCarrito(nombre, precio, cantidadId) {
-    var cantidad = document.getElementById(cantidadId).value;
-    var producto = nombre + ' - Precio: $' + precio + ' - Cantidad: ' + cantidad;
-    var listItem = document.createElement('li');
-    listItem.textContent = producto;
-    listItem.innerHTML += ' <button class="remove-btn" onclick="quitarDelCarrito(this)">Quitar</button>';
-    document.getElementById('carrito-list').appendChild(listItem);
+  document.addEventListener('DOMContentLoaded', function() {
+    var userInfoElement = document.getElementById("user-info");
+    var user = JSON.parse(localStorage.getItem("user"));
+
+    if (user) {
+      userInfoElement.textContent = "¡Bienvenido, " + user.username + "!";
+      document.getElementById("logout-button").style.display = "block";
+    } else {
+      userInfoElement.innerHTML = '<a href="index.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
+    }
+
+    document.getElementById("logout-button").addEventListener("click", function() {
+      localStorage.removeItem("user");
+      window.location.href = "login.html";
+    });
+
+    mostrarProductos();
+  });
+
+  function mostrarProductos() {
+    var listaProductos = document.getElementById("lista-productos");
+    listaProductos.innerHTML = "";
+
+    var productos = JSON.parse(localStorage.getItem("productos")) || [];
+
+    productos.forEach(function(producto, index) {
+      var listItem = document.createElement("li");
+      listItem.textContent = `${producto.nombre} - Precio: $${producto.precio} - Disponibles: ${producto.cantidad}`;
+      var cantidadInput = document.createElement("input");
+      cantidadInput.type = "number";
+      cantidadInput.id = `cantidad${index}`;
+      cantidadInput.name = `cantidad${index}`;
+      cantidadInput.min = 0;
+      cantidadInput.max = Math.min(producto.cantidad, 5); // Limitar la cantidad máxima al mínimo entre 5 y la cantidad disponible
+      cantidadInput.required = true;
+      listItem.appendChild(document.createTextNode(" - Cantidad: "));
+      listItem.appendChild(cantidadInput);
+      var addButton = document.createElement("button");
+      addButton.textContent = "Reservar";
+      addButton.onclick = function() { agregarAlCarrito(producto, cantidadInput.value); };
+      listItem.appendChild(addButton);
+      listaProductos.appendChild(listItem);
+    });
   }
 
-  function quitarDelCarrito(elemento) {
-    elemento.parentNode.remove();
+  function agregarAlCarrito(producto, cantidad) {
+    var carritoList = document.getElementById("carrito-list");
+    var listItem = document.createElement("li");
+    listItem.textContent = `${producto.nombre} - Precio: $${producto.precio} - Cantidad: ${cantidad}`;
+    var removeButton = document.createElement("button");
+    removeButton.textContent = "Quitar";
+    removeButton.onclick = function() { quitarDelCarrito(producto, cantidad); };
+    listItem.appendChild(removeButton);
+    carritoList.appendChild(listItem);
+
+    // Reducir la cantidad disponible en el stock
+    producto.cantidad -= parseInt(cantidad);
+
+    // Actualizar el stock en localStorage
+    var productos = JSON.parse(localStorage.getItem("productos")) || [];
+    productos.forEach(function(p) {
+      if (p.nombre === producto.nombre) {
+        p.cantidad = producto.cantidad;
+      }
+    });
+    localStorage.setItem("productos", JSON.stringify(productos));
+    
+    // Actualizar la visualización de los productos
+    mostrarProductos();
+  }
+
+  function quitarDelCarrito(producto, cantidad) {
+    // Aumentar la cantidad disponible en el stock
+    producto.cantidad += parseInt(cantidad);
+
+    // Actualizar el stock en localStorage
+    var productos = JSON.parse(localStorage.getItem("productos")) || [];
+    productos.forEach(function(p) {
+      if (p.nombre === producto.nombre) {
+        p.cantidad = producto.cantidad;
+      }
+    });
+    localStorage.setItem("productos", JSON.stringify(productos));
+
+    // Quitar el producto del carrito
+    event.target.parentElement.remove();
   }
 
   function imprimirTicket() {
@@ -213,7 +213,10 @@
 
     var carritoListItems = document.getElementById('carrito-list').children;
     for (var i = 0; i < carritoListItems.length; i++) {
-      productosSeleccionados += carritoListItems[i].textContent.replace('Quitar', '') + '\n';
+      var item = carritoListItems[i].textContent.split(' - ');
+      var nombre = item[0];
+      var cantidad = parseInt(item[2].split(': ')[1]); // Extraer la cantidad del texto
+      productosSeleccionados += `${nombre} - Cantidad: ${cantidad}\n`;
     }
 
     var ticketInfo = "RUT: " + rut + "\n";
@@ -224,53 +227,5 @@
     
   }
 </script>
-<head>
-  <div>
-    <center>
-          <button onclick="window.location.href='index.html'">Regresar Inicio</button>
-    </center>
-  </div>
-</head>
-<!--JS Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Comprobar si hay una sesión activa al cargar la página
-      var userInfoElement = document.getElementById("user-info");
-      var user = JSON.parse(localStorage.getItem("user")); // Obtener la información del usuario de localStorage
-
-      if (user) {
-        // Si hay un usuario almacenado en la sesión, mostrar su nombre de usuario
-        userInfoElement.textContent = "¡Bienvenido, " + user.username + "!";
-        document.getElementById("logout-button").style.display = "block"; // Mostrar el botón de cierre de sesión
-      } else {
-        // Si no hay un usuario almacenado, mostrar un mensaje de invitación para iniciar sesión
-        userInfoElement.innerHTML = '<a href="index.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
-      }
-
-      // Manejar el clic en el botón de cierre de sesión
-      document.getElementById("logout-button").addEventListener("click", function() {
-        // Eliminar el usuario de localStorage
-        localStorage.removeItem("user");
-        // Redireccionar a la página de inicio de sesión u otra página si es necesario
-        window.location.href = "login.html";
-      });
-    });
-  </script>
 </body>
 </html>
