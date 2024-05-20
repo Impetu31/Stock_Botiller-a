@@ -67,6 +67,10 @@
   button:hover {
     background-color: #45a049;
   }
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
   .remove-btn {
     background-color: #f44336;
   }
@@ -118,6 +122,27 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+  $(document).ready(function() {
+    // Función para habilitar o deshabilitar el botón de impresión del ticket
+    function toggleTicketButton() {
+      var rut = $('#rut').val();
+      var numeroDocumento = $('#numeroDocumento').val();
+      if (rut && numeroDocumento) {
+        $('#reservar-btn').prop('disabled', false);
+      } else {
+        $('#reservar-btn').prop('disabled', true);
+      }
+    }
+
+    // Llama a la función cuando los campos cambian
+    $('#rut, #numeroDocumento').on('input', function() {
+      toggleTicketButton();
+    });
+
+    // Ejecutar la función al cargar la página
+    toggleTicketButton();
+  });
+
   document.addEventListener('DOMContentLoaded', function() {
     var userInfoElement = document.getElementById("user-info");
     var user = JSON.parse(localStorage.getItem("user"));
@@ -173,7 +198,7 @@
       return;
     }
     var carritoList = document.getElementById("carrito-list");
-    // Verificar si el producto ya está en el carrito
+       // Verificar si el producto ya está en el carrito
     var productosEnCarrito = carritoList.getElementsByTagName("li");
     for (var i = 0; i < productosEnCarrito.length; i++) {
       var nombreProducto = productosEnCarrito[i].textContent.split(' - ')[0];
@@ -244,8 +269,18 @@
     var ticketInfo = "RUT: " + rut + "\n";
     ticketInfo += "Número de Documento: " + numeroDocumento + "\n";
     ticketInfo += "Productos Seleccionados:\n" + productosSeleccionados;
-    
-    alert(ticketInfo);
+
+    // Crear un elemento <div> oculto para colocar los datos que se imprimirán
+    var printableContent = document.createElement('div');
+    printableContent.style.display = 'none';
+    printableContent.innerText = ticketInfo;
+    document.body.appendChild(printableContent);
+
+    // Abrir la ventana de impresión
+    window.print();
+
+    // Eliminar el elemento <div> después de la impresión
+    printableContent.remove();
   }
 </script>
 </body>
