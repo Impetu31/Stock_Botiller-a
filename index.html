@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bienvenido a Botillería Pato Mar</title>
-
     <link rel="stylesheet" href="css/style.css" />
-
     <!-- CSS Boostrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
@@ -56,10 +57,10 @@
         background-color: #45a049;
       }
       .logo {
-    width: 100px; 
-    height: auto;
-    margin-right: 10px; 
-  }
+        width: 100px;
+        height: auto;
+        margin-right: 10px;
+      }
     </style>
   </head>
   <body>
@@ -74,14 +75,17 @@
       >
         <span aria-hidden="true">&times;</span>
       </button>
-      
     </div>
     <div class="container">
       <h1 class="text-success">
-    <img src="imagen/LOGOPATOMAR.png" alt="Logo de Botillería Pato Mar" class="logo">
-    Bienvenido a Botillería Pato Mar
-    <p id="rate">valor del dolar</p>
-  </h1>
+        <img
+          src="imagen/LOGOPATOMAR.png"
+          alt="Logo de Botillería Pato Mar"
+          class="logo"
+        />
+        Bienvenido a Botillería Pato Mar
+        <p id="rate">valor del dolar</p>
+      </h1>
       <!-- Formulario de búsqueda -->
       <form action="/buscar" method="POST" class="search-bar">
         <input type="text" placeholder="Buscar productos" />
@@ -155,12 +159,12 @@
       <div id="login-form">
         <h2>Iniciar sesión</h2>
         <form id="loginForm" action="/login" method="POST">
-        <label for="username">Nombre de usuario o correo:</label><br />
-        <input type="text" id="username" name="username" /><br />
-        <label for="password">Contraseña:</label><br />
-        <input type="password" id="password" name="password" /><br /><br />
-        <button type="submit">Iniciar sesión</button>
-      </form>
+          <label for="username">Nombre de usuario o correo:</label><br />
+          <input type="text" id="username" name="username" /><br />
+          <label for="password">Contraseña:</label><br />
+          <input type="password" id="password" name="password" /><br /><br />
+          <button type="submit">Iniciar sesión</button>
+        </form>
       </div>
       <hr />
       <!-- Enlace para registrarse -->
@@ -174,26 +178,34 @@
       <button onclick="window.location.href='stock.html'">Ver Stock</button>
       <!-- Botón para ver el contacto -->
       <button onclick="window.location.href='contacto.html'">Contacto</button>
-         <!-- Botón para ver el admin -->
+      <!-- Botón para ver el admin -->
       <button onclick="window.location.href='admin.html'">Administrador</button>
     </div>
     <!--JS Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <script>
       async function fetchDollarRate() {
-          try {
-              const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-              const data = await response.json();
-              const clpRate = data.rates.CLP;
-              document.getElementById('rate').textContent = `1 USD = ${clpRate} CLP`;
-          } catch (error) {
-              document.getElementById('rate').textContent = 'Error al obtener el valor del dólar.';
-              console.error('Error fetching the dollar rate:', error);
-          }
+        try {
+          const response = await fetch(
+            "https://api.exchangerate-api.com/v4/latest/USD"
+          );
+          const data = await response.json();
+          const clpRate = data.rates.CLP;
+          document.getElementById(
+            "rate"
+          ).textContent = `1 USD = ${clpRate} CLP`;
+        } catch (error) {
+          document.getElementById("rate").textContent =
+            "Error al obtener el valor del dólar.";
+          console.error("Error fetching the dollar rate:", error);
+        }
       }
 
       fetchDollarRate();
-  </script>
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
@@ -213,33 +225,37 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script>
-    $(document).ready(function () {
-      // Validación del formulario de inicio de sesión
-      $("#loginForm").validate({
-        rules: {
-          username: "required",
-          password: "required"
-        },
-        messages: {
-          username: "Por favor, ingresa tu nom  bre de usuario o correo",
-          password: "Por favor, ingresa tu contraseña"
-        },
-        submitHandler: function (form) {
-          // Verificar si el usuario está registrado en el localStorage
-          var username = $("#username").val();
-          var password = $("#password").val();
-          var user = JSON.parse(localStorage.getItem("user"));
+      $(document).ready(function () {
+        // Validación del formulario de inicio de sesión
+        $("#loginForm").validate({
+          rules: {
+            username: "required",
+            password: "required",
+          },
+          messages: {
+            username: "Por favor, ingresa tu nom  bre de usuario o correo",
+            password: "Por favor, ingresa tu contraseña",
+          },
+          submitHandler: function (form) {
+            // Verificar si el usuario está registrado en el localStorage
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var user = JSON.parse(localStorage.getItem("user"));
 
-          if (user && user.username === username && user.password === password) {
-            // Usuario encontrado, redirigir a la página de inicio
-            window.location.href = "inicioexitoso.html";
-          } else {
-            // Usuario no encontrado o credenciales incorrectas
-            alert("Nombre de usuario o contraseña incorrectos");
-          }
-        }
+            if (
+              user &&
+              user.username === username &&
+              user.password === password
+            ) {
+              // Usuario encontrado, redirigir a la página de inicio
+              window.location.href = "inicioexitoso.html";
+            } else {
+              // Usuario no encontrado o credenciales incorrectas
+              alert("Nombre de usuario o contraseña incorrectos");
+            }
+          },
+        });
       });
-    });
-  </script>
+    </script>
   </body>
 </html>
