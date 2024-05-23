@@ -1,59 +1,68 @@
 body {
-    background-image: url('../imagen/PATOMAR.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-  }
-  
-  /* El código CSS que estaba en el bloque <style> del HTML */
-  body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
-  }
-  
-  .container {
+    background-image: url('../imagen/PATOMAR.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.container {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
     background-color: #ccccccb0;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
     text-align: center;
+}
+
+h1 {
     color: #333;
     margin-bottom: 20px;
-  }
-  
-  .search-bar {
-    text-align: center;
+}
+
+.search-bar {
     margin-top: 20px;
-  }
-  
-  hr {
+}
+
+hr {
     border: 1px solid #ccc;
     margin: 20px 0;
-  }
-  
-  button {
+}
+
+button {
     padding: 10px 20px;
-    background-color: #4caf50;
+    background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
     margin-bottom: 10px;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #45a049;
-  }
-  
-  .logo {
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrar horizontalmente */
+    text-align: left; /* Alineación del texto a la izquierda */
+}
+
+.logo {
     width: 100px;
     height: auto;
-    margin-right: 10px;
-  }
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+}
+
+.social-media img {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
