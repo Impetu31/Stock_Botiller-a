@@ -128,9 +128,29 @@ header {
   height: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
 }
 
 
 .check_menu_hamburguesa {
   display: none;
+}
+
+.ul_menu_hamburguesa {
+  width: 100%;
+  height: 100vh - 80px;
+  background-color: red;
+  position: absolute;
+  top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.alert-warning {
+  margin: 50px 0px;
 }
