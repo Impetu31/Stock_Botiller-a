@@ -37,7 +37,7 @@
   <ul id="lista-productos">
     <!-- Los productos se cargarán aquí dinámicamente desde el script -->
   </ul>
-  <div class="carrito">
+  <div class="carrito text-center mt-3">
     <h3>Carrito</h3>
     <p>Productos seleccionados:</p>
     <ul id="carrito-list"></ul>
@@ -46,10 +46,13 @@
     <label for="numeroDocumento">Número de Documento:</label>
     <input type="text" id="numeroDocumento" name="numeroDocumento">
     <br><br>
-    <button id="reservar-btn" onclick="imprimirTicket()">Imprimir Ticket</button>
+    <!-- Eliminar el botón de impresión del ticket -->
+    <!-- <button id="reservar-btn" onclick="imprimirTicket()">Imprimir Ticket</button> -->
+    <!-- Agregar el botón de PayPal Checkout -->
+    <div id="paypal-button-container"></div>
   </div>
 </div>
-
+<script src="https://www.paypal.com/sdk/js?client-id=AUDgM_r-Og8ngzDS5pPYITwg0vGNknIyoiJb1JCd4p9_ZZlqJNBNhtuZbNveGc_I4mBX8y_5cyy1kmBi"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
@@ -151,7 +154,7 @@
     // Actualizar el stock en localStorage
     var productos = JSON.parse(localStorage.getItem("productos")) || [];
     productos.forEach(function(p) {
-      if (p.nombre === producto.nombre) {
+      if  (p.nombre === producto.nombre) {
         p.cantidad = producto.cantidad;
       }
     });
@@ -178,40 +181,28 @@
     event.target.parentElement.remove();
   }
 
-  function imprimirTicket() {
-    var user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-      alert("Debes iniciar sesión para imprimir el ticket.");
-      return;
+  // Función para inicializar PayPal Checkout
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      // Crea una orden de compra
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: '10' // Puedes cambiar el valor aquí
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // Captura la aprobación de la transacción
+      return actions.order.capture().then(function(details) {
+        // Inserta aquí el código para completar la compra, por ejemplo, enviar datos al servidor
+        alert('Transacción completada por ' + details.payer.name.given_name);
+      });
     }
-    var rut = document.getElementById('rut').value;
-    var numeroDocumento = document.getElementById('numeroDocumento').value;
-    var productosSeleccionados = '';
+  }).render('#paypal-button-container'); // Renderiza el botón de PayPal Checkout en el contenedor
 
-    var carritoListItems = document.getElementById('carrito-list').children;
-    for (var i = 0; i < carritoListItems.length; i++) {
-      var item = carritoListItems[i].textContent.split(' - ');
-      var nombre = item[0];
-      var cantidad = parseInt(item[2].split(': ')[1]); // Extraer la cantidad del texto
-      productosSeleccionados += `${nombre} - Cantidad: ${cantidad}\n`;
-    }
-
-    var ticketInfo = "RUT: " + rut + "\n";
-    ticketInfo += "Número de Documento: " + numeroDocumento + "\n";
-    ticketInfo += "Productos Seleccionados:\n" + productosSeleccionados;
-
-    // Crear un elemento <div> oculto para colocar los datos que se imprimirán
-    var printableContent = document.createElement('div');
-    printableContent.style.display = 'none';
-    printableContent.innerText = ticketInfo;
-    document.body.appendChild(printableContent);
-
-    // Abrir la ventana de impresión
-    window.print();
-
-    // Eliminar el elemento <div> después de la impresión
-    printableContent.remove();
-  }
 </script>
 </body>
 </html>
+
