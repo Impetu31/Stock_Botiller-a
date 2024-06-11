@@ -121,7 +121,7 @@ ul {
 header {
   height: 80px;
   padding: 5px 15px;
-  background: #ccccccb0;
+  background: #cccccc90;
 }
 
 .navbar {
@@ -141,7 +141,7 @@ header {
 .ul_menu_hamburguesa {
   width: 100%;
   height: 100vh - 80px;
-  background-color: red;
+  background-color: #cccccc90;
   position: absolute;
   top: 80px;
   display: flex;
