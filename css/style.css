@@ -7,6 +7,7 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    box-sizing: border-box;
 }
 
 .carrito {
@@ -104,4 +105,52 @@ ul {
   }
 .logousuario{
   width: 35px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.logo_header {
+  margin: 0;
+  width: 50px;
+  height: 50px;
+  border: 4px solid black;
+  border-radius: 100%;
+}
+
+
+header {
+  height: 80px;
+  padding: 5px 15px;
+  background: #cccccc90;
+}
+
+.navbar {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+
+.check_menu_hamburguesa {
+  display: none;
+}
+
+.ul_menu_hamburguesa {
+  width: 100%;
+  height: 100vh - 80px;
+  background-color: #cccccc90;
+  position: absolute;
+  top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.alert-warning {
+  margin: 0;
 }
