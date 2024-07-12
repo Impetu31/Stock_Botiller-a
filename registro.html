@@ -7,185 +7,185 @@
   <link rel="stylesheet" href="css/style.css" />
   <!-- CSS Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-    crossorigin="anonymous" />
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- jQuery Validate -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 </head>
 <body>
   <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>¡Atención!</strong> No bebas y manejes. La seguridad vial es responsabilidad de todos.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
   <nav>
-    <div class="container">
+    <div class="container d-flex justify-content-between align-items-center">
       <div id="user-info" class="user-info"></div> <!-- Aquí se mostrará el nombre de usuario -->
-      <button id="logout-button" class="btn logout-button" style="display: none">Cerrar sesión</button>
+      <button id="logout-button" class="btn btn-success" style="display: none;">Cerrar sesión</button>
     </div>
   </nav>
-  <div class="container">
-    <div class="logo-container">
-      <img src="imagen/LOGOPATOMAR.png" alt="Logo de Botillería Pato Mar" class="logo" />
+  <div class="container mt-4">
+    <div class="logo-container text-center mb-4">
+      <img src="imagen/LOGOPATOMAR.png" alt="Logo de Botillería Pato Mar" class="logo img-fluid" />
       <h1 class="text-success">Bienvenido a Botillería Pato Mar</h1>
     </div>
-    <br />
     <h2>Registro</h2>
-    <form id="registro-form" action="/registro" method="POST">
-      <ul class="registro-form-list">
-        <li class="registro-form-list-item">
-          <label for="username">Nombre de usuario:</label>
-          <input type="text" id="username" name="username" required class="form-control" />
-        </li>
-        <li class="registro-form-list-item">
-          <label for="email">Correo electrónico:</label>
-          <input type="email" id="email" name="email" required class="form-control" />
-        </li>
-        <li class="registro-form-list-item">
-          <label for="rut">RUT:</label>
-          <input type="text" id="rut" name="rut" required class="form-control" />
-        </li>
-        <li class="registro-form-list-item">
-          <label for="numero_documento">Número de documento:</label>
-          <input type="text" id="numero_documento" name="numero_documento" required class="form-control" />
-        </li>
-        <li class="registro-form-list-item">
-          <label for="password">Contraseña:</label>
-          <input type="password" id="password" name="password" required class="form-control" />
-        </li>
-      </ul>
-      <input type="submit" value="Registrarse" class="btn btn-success" />
+    <form id="registro-form" class="row g-3 needs-validation" novalidate>
+      <div class="col-md-6">
+        <label for="username" class="form-label">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" class="form-control" required />
+        <div class="invalid-feedback">
+          Por favor, ingresa tu nombre de usuario.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="email" class="form-label">Correo electrónico:</label>
+        <input type="email" id="email" name="email" class="form-control" required />
+        <div class="invalid-feedback">
+          Por favor, ingresa tu correo electrónico.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="rut" class="form-label">RUT:</label>
+        <input type="text" id="rut" name="rut" class="form-control" required />
+        <div class="invalid-feedback">
+          Por favor, ingresa tu RUT.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="numero_documento" class="form-label">Número de documento:</label>
+        <input type="text" id="numero_documento" name="numero_documento" class="form-control" required />
+        <div class="invalid-feedback">
+          Por favor, ingresa tu número de documento.
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="password" class="form-label">Contraseña:</label>
+        <input type="password" id="password" name="password" class="form-control" required />
+        <div class="invalid-feedback">
+          Por favor, ingresa tu contraseña.
+        </div>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-success" type="submit">Registrarse</button>
+      </div>
     </form>
   </div>
   <!-- JS Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-    crossorigin="anonymous"></script>
-  <!-- jQuery and jQuery Validate -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
   <script>
-        $(document).ready(function () {
-        // Agregar reglas de validación
-        $("#registro-form").validate({
-          rules: {
-            username: {
-              required: true,
-              minlength: 2,
-              uniqueUsername: true,
-            },
-            email: {
-              required: true,
-              email: true,
-            },
-            rut: {
-              required: true,
-              minlength: 9,
-            },
-            numero_documento: {
-              required: true,
-              minlength: 9,
-            },
-            password: {
-              required: true,
-              minlength: 6,
-            },
+    (function () {
+      'use strict'
+      var forms = document.querySelectorAll('.needs-validation')
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+    $(document).ready(function () {
+      $("#registro-form").validate({
+        rules: {
+          username: {
+            required: true,
+            minlength: 2,
           },
-          messages: {
-            username: {
-              required: "Por favor, ingresa tu nombre de usuario.",
-              minlength:
-                "El nombre de usuario debe tener al menos 2 caracteres.",
-            },
-            email: {
-              required: "Por favor, ingresa tu correo electrónico.",
-              email: "Por favor, ingresa un correo electrónico válido.",
-            },
-            rut: {
-              required: "Por favor, ingresa tu RUT.",
-            },
-            numero_documento: {
-              required: "Por favor, ingresa tu número de documento.",
-            },
-            password: {
-              required: "Por favor, ingresa tu contraseña.",
-              minlength: "La contraseña debe tener al menos 6 caracteres.",
-            },
+          email: {
+            required: true,
+            email: true,
           },
-          submitHandler: function (form) {
-            // Obtener los valores del formulario
-            var username = $("#username").val();
-            var email = $("#email").val();
-            var rut = $("#rut").val();
-            var numero_documento = $("#numero_documento").val();
-            var password = $("#password").val();
+          rut: {
+            required: true,
+            minlength: 9,
+          },
+          numero_documento: {
+            required: true,
+            minlength: 9,
+          },
+          password: {
+            required: true,
+            minlength: 6,
+          },
+        },
+        messages: {
+          username: {
+            required: "Por favor, ingresa tu nombre de usuario.",
+            minlength: "El nombre de usuario debe tener al menos 2 caracteres.",
+          },
+          email: {
+            required: "Por favor, ingresa tu correo electrónico.",
+            email: "Por favor, ingresa un correo electrónico válido.",
+          },
+          rut: {
+            required: "Por favor, ingresa tu RUT.",
+          },
+          numero_documento: {
+            required: "Por favor, ingresa tu número de documento.",
+          },
+          password: {
+            required: "Por favor, ingresa tu contraseña.",
+            minlength: "La contraseña debe tener al menos 6 caracteres.",
+          },
+        },
+        submitHandler: function (form) {
+          var username = $("#username").val();
+          var email = $("#email").val();
+          var rut = $("#rut").val();
+          var numero_documento = $("#numero_documento").val();
+          var password = $("#password").val();
 
-            // Crear un objeto con los datos del usuario
-            var user = {
-              username: username,
-              email: email,
-              rut: rut,
-              numero_documento: numero_documento,
-              password: password,
-            };
+          var userData = {
+            nombre_usuario: username,
+            correo: email,
+            rut: rut,
+            numero_documento: numero_documento,
+            contraseña: password
+          };
 
-            // Almacenar el objeto en localStorage
-            localStorage.setItem("user", JSON.stringify(user));
-
-            // Almacenar el nombre de usuario en la lista de nombres de usuario registrados
-            var registeredUsernames =
-              JSON.parse(localStorage.getItem("registeredUsernames")) || [];
-            registeredUsernames.push(username);
-            localStorage.setItem(
-              "registeredUsernames",
-              JSON.stringify(registeredUsernames)
-            );
-
-            // Redirigir o realizar alguna acción adicional si es necesario
-            // Por ejemplo, redirigir a otra página
+          fetch('http://localhost:8000/api/clientes/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData)
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Error en la solicitud');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Success:', data);
             window.location.href = "registroexitoso.html";
-          },
-        });
-        // Método personalizado para verificar si el nombre de usuario es único
-        $.validator.addMethod(
-          "uniqueUsername",
-          function (value, element) {
-            var registeredUsernames =
-              JSON.parse(localStorage.getItem("registeredUsernames")) || [];
-            return !registeredUsernames.includes(value);
-          },
-          "Este nombre de usuario ya está registrado. Por favor, elige otro."
-        );
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            alert('Hubo un error al registrar el usuario. Intenta de nuevo.');
+          });
 
-        // Comprobar si hay una sesión activa al cargar la página
-        var userInfoElement = document.getElementById("user-info");
-        var user = JSON.parse(localStorage.getItem("user")); // Obtener la información del usuario de localStorage
-
-        if (user) {
-          // Si hay un usuario almacenado en la sesión, mostrar su nombre de usuario
-          userInfoElement.textContent = "¡Bienvenido, " + user.username + "!";
-          $("#logout-button").show(); // Mostrar el botón de cierre de sesión
-        } else {
-          // Si no hay un usuario almacenado, mostrar un mensaje de invitación para iniciar sesión
-          userInfoElement.innerHTML =
-            '<a href="index.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
-        }
-
-        // Manejar el clic en el botón de cierre de sesión
-        $("#logout-button").click(function () {
-          // Eliminar el usuario de localStorage
-          localStorage.removeItem("user");
-          // Redireccionar a la página de inicio de sesión u otra página si es necesario
-          window.location.href = "index.html";
-        });
+          return false; // Previene el envío normal del formulario
+        },
       });
-    </script>
-  </body>
+
+      var userInfoElement = document.getElementById("user-info");
+      var username = localStorage.getItem("username");
+
+      if (username) {
+        userInfoElement.textContent = "¡Bienvenido, " + username + "!";
+        document.getElementById("logout-button").style.display = "block";
+      } else {
+        userInfoElement.innerHTML = '<a href="index.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
+      }
+
+      document.getElementById("logout-button").addEventListener("click", function() {
+        localStorage.removeItem("username");
+        window.location.href = "index.html";
+      });
+    });
+  </script>
+</body>
 </html>

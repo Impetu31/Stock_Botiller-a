@@ -5,50 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stock de Productos - Botillería Pato Mar</title>
 <link rel="stylesheet" href="css/style.css" />
-<!-- CSS Boostrap -->
+<!-- CSS Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
 </head>
 <body>
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
   <strong>¡Atención!</strong> ¡Ticket válido solo por el día!
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <nav>
     <div class="container">
       <div id="user-info"></div> <!-- Aquí se mostrará el nombre de usuario -->
-      <button id="logout-button" class="btn logout-button" style="float: right; margin-top: 10px; background-color: #4caf50; border: none; display: none;">Cerrar sesión</button>
+      <button id="logout-button" class="btn btn-success" style="float: right; margin-top: 10px; display: none;">Cerrar sesión</button>
     </div>
-  </nav>
-</div>
-<div class="container">
-  <h1 class="text-success">
-    <img src="imagen/LOGOPATOMAR.png" alt="Logo de Botillería Pato Mar" class="logo">
+</nav>
+<div class="container mt-4">
+  <h1 class="text-success text-center">
+    <img src="imagen/LOGOPATOMAR.png" alt="Logo de Botillería Pato Mar" class="logo img-fluid">
     Bienvenido a Botillería Pato Mar
   </h1>
-  <h2>Stock de Productos</h2>
-  <ul id="lista-productos">
+  <h2 class="mt-4">Stock de Productos</h2>
+  <ul id="lista-productos" class="list-group">
     <!-- Los productos se cargarán aquí dinámicamente desde el script -->
   </ul>
-  <div class="carrito text-center mt-3">
+  <div class="carrito text-center mt-4">
     <h3>Carrito</h3>
     <p>Productos seleccionados:</p>
-    <ul id="carrito-list"></ul>
-    <label for="rut">RUT:</label>
-    <input type="text" id="rut" name="rut">
-    <label for="numeroDocumento">Número de Documento:</label>
-    <input type="text" id="numeroDocumento" name="numeroDocumento">
-    <br><br>
-    <!-- Eliminar el botón de impresión del ticket -->
-    <!-- <button id="reservar-btn" onclick="imprimirTicket()">Imprimir Ticket</button> -->
-    <!-- Agregar el botón de PayPal Checkout -->
+    <ul id="carrito-list" class="list-group"></ul>
+    <div class="mt-3">
+      <label for="rut" class="form-label">RUT:</label>
+      <input type="text" id="rut" name="rut" class="form-control" style="display:inline-block; width: auto;">
+      <label for="numeroDocumento" class="form-label">Número de Documento:</label>
+      <input type="text" id="numeroDocumento" name="numeroDocumento" class="form-control" style="display:inline-block; width: auto;">
+    </div>
+    <br>
     <div id="paypal-button-container"></div>
   </div>
 </div>
@@ -67,29 +57,26 @@
       }
     }
 
-    // Llama a la función cuando los campos cambian
     $('#rut, #numeroDocumento').on('input', function() {
       toggleTicketButton();
     });
 
-    // Ejecutar la función al cargar la página
     toggleTicketButton();
   });
 
   document.addEventListener('DOMContentLoaded', function() {
     var userInfoElement = document.getElementById("user-info");
-    var user = JSON.parse(localStorage.getItem("user"));
+    var username = localStorage.getItem("username");
 
-    if (user) {
-      userInfoElement.textContent = "¡Bienvenido, " + user.username + "!";
+    if (username) {
+      userInfoElement.textContent = "¡Bienvenido, " + username + "!";
       document.getElementById("logout-button").style.display = "block";
     } else {
       userInfoElement.innerHTML = '<a href="index.html">Iniciar sesión</a> | <a href="registro.html">Registrarse</a>';
-      document.getElementById("reservar-btn").disabled = true;
     }
 
     document.getElementById("logout-button").addEventListener("click", function() {
-      localStorage.removeItem("registeredUsernames");
+      localStorage.removeItem("username");
       window.location.href = "index.html";
     });
 
@@ -100,38 +87,46 @@
     var listaProductos = document.getElementById("lista-productos");
     listaProductos.innerHTML = "";
 
-    var productos = JSON.parse(localStorage.getItem("productos")) || [];
+    fetch('http://localhost:8000/api/productos/')
+    .then(response => response.json())
+    .then(productos => {
+        productos.forEach(function(producto, index) {
+            var listItem = document.createElement("li");
+            listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+            listItem.innerHTML = `<span>${producto.nombre} - Precio: $${producto.precio} - Disponibles: ${producto.cantidad}</span>`;
+            
+            var cantidadSelect = document.createElement("select");
+            cantidadSelect.className = "form-select";
+            cantidadSelect.style.width = "auto";
+            for (var i = 1; i <= producto.cantidad; i++) {
+                var option = document.createElement("option");
+                option.value = i;
+                option.textContent = i;
+                cantidadSelect.appendChild(option);
+            }
+            listItem.appendChild(cantidadSelect);
 
-    productos.forEach(function(producto, index) {
-      var listItem = document.createElement("li");
-      listItem.textContent = `${producto.nombre} - Precio: $${producto.precio} - Disponibles: ${producto.cantidad}`;
-      var cantidadSelect = document.createElement("select");
-      cantidadSelect.id = `cantidad${index}`;
-      cantidadSelect.name = `cantidad${index}`;
-      for (var i = 1; i <= 5; i++) {
-        var option = document.createElement("option");
-        option.value = i;
-        option.textContent = i;
-        cantidadSelect.appendChild(option);
-      }
-      listItem.appendChild(document.createTextNode(" - Cantidad: "));
-      listItem.appendChild(cantidadSelect);
-      var addButton = document.createElement("button");
-      addButton.textContent = "Reservar";
-      addButton.onclick = function() { agregarAlCarrito(producto, cantidadSelect.value); };
-      listItem.appendChild(addButton);
-      listaProductos.appendChild(listItem);
+            var addButton = document.createElement("button");
+            addButton.className = "btn btn-primary";
+            addButton.textContent = "Reservar";
+            addButton.onclick = function() { agregarAlCarrito(producto, cantidadSelect.value); };
+            listItem.appendChild(addButton);
+
+            listaProductos.appendChild(listItem);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
   }
 
   function agregarAlCarrito(producto, cantidad) {
-    var user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
+    var username = localStorage.getItem("username");
+    if (!username) {
       alert("Debes iniciar sesión para agregar productos al carrito.");
       return;
     }
     var carritoList = document.getElementById("carrito-list");
-       // Verificar si el producto ya está en el carrito
     var productosEnCarrito = carritoList.getElementsByTagName("li");
     for (var i = 0; i < productosEnCarrito.length; i++) {
       var nombreProducto = productosEnCarrito[i].textContent.split(' - ')[0];
@@ -141,17 +136,18 @@
       }
     }
     var listItem = document.createElement("li");
-    listItem.textContent = `${producto.nombre} - Precio: $${producto.precio} - Cantidad: ${cantidad}`;
+    listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+    listItem.innerHTML = `<span>${producto.nombre} - Precio: $${producto.precio} - Cantidad: ${cantidad}</span>`;
+    
     var removeButton = document.createElement("button");
+    removeButton.className = "btn btn-danger";
     removeButton.textContent = "Quitar";
     removeButton.onclick = function() { quitarDelCarrito(producto, cantidad); };
     listItem.appendChild(removeButton);
     carritoList.appendChild(listItem);
 
-    // Reducir la cantidad disponible en el stock
     producto.cantidad -= parseInt(cantidad);
 
-    // Actualizar el stock en localStorage
     var productos = JSON.parse(localStorage.getItem("productos")) || [];
     productos.forEach(function(p) {
       if  (p.nombre === producto.nombre) {
@@ -160,15 +156,12 @@
     });
     localStorage.setItem("productos", JSON.stringify(productos));
     
-    // Actualizar la visualización de los productos
     mostrarProductos();
   }
 
   function quitarDelCarrito(producto, cantidad) {
-    // Aumentar la cantidad disponible en el stock
     producto.cantidad += parseInt(cantidad);
 
-    // Actualizar el stock en localStorage
     var productos = JSON.parse(localStorage.getItem("productos")) || [];
     productos.forEach(function(p) {
       if (p.nombre === producto.nombre) {
@@ -177,32 +170,25 @@
     });
     localStorage.setItem("productos", JSON.stringify(productos));
 
-    // Quitar el producto del carrito
     event.target.parentElement.remove();
   }
 
-  // Función para inicializar PayPal Checkout
   paypal.Buttons({
     createOrder: function(data, actions) {
-      // Crea una orden de compra
       return actions.order.create({
         purchase_units: [{
           amount: {
-            value: '10' // Puedes cambiar el valor aquí
+            value: '10'
           }
         }]
       });
     },
     onApprove: function(data, actions) {
-      // Captura la aprobación de la transacción
       return actions.order.capture().then(function(details) {
-        // Inserta aquí el código para completar la compra, por ejemplo, enviar datos al servidor
         alert('Transacción completada por ' + details.payer.name.given_name);
       });
     }
-  }).render('#paypal-button-container'); // Renderiza el botón de PayPal Checkout en el contenedor
-
+  }).render('#paypal-button-container');
 </script>
 </body>
 </html>
-
